@@ -7,11 +7,13 @@
 const app = require('../app');
 const debug = require('debug')('appchat:server');
 const http = require('http');
-
-
+//importamos modelo Mensaje
+const Mensaje = require('../models/mensaje.model');
 
 
 require('dotenv').config();
+//configuramos la base de datos
+require('../config/db');
 
 /**
  * Get port from environment and store in Express.
@@ -47,8 +49,13 @@ io.on('connection', (socket) => {
   // con esto solo lo emitimos ahora nos vamos al cliente y lo recepcioanmos y mostramos
 
 
-
-  socket.on('mensaje_chat', (data) => {
+//aqui sabemos que el usuario esta conectado y el menaje emitido
+  socket.on('mensaje_chat', async (data) => {
+    //vamos a pasar los mismos parametros que tiene el Squema model 
+    await Mensaje.create({
+      nombre: data.nombre,
+      texto: data.mensaje
+    });
     // console.log(data); comprobamos que vemos el mensaje emitido ahora vamos a mostrar a todos los clientes este evento
     io.emit('mensaje_chat', data); 
     

@@ -12,9 +12,8 @@ block content
         span#nroUsuarios
     main  
         ul#mensajes
-          li Lourder: HOla Amigos 
-          li Ramon: que pasa 
-          li Sofia buenas tardes
+          each mensaje in mensajes 
+            li #{mensaje.nombre}: #{mensaje.texto}
 
 
     footer 
@@ -59,16 +58,17 @@ block content
         const li = document.createElement('li');
         li.innerText = `${data.nombre}: ${data.mensaje}`;
         mensajes.appendChild(li);
+        //mensajes.prepend
 
 
     });
 
-    socket.on('usuarios_chat', (data) => {´
+    socket.on('usuarios_chat', (data) => {
       console.log('USUARIOS', data);// nos muestra los usuarios conectados... 
       //mostrar el número de usuarios debajo del titulo del chat
      
-      innerText= nroUsuarios.data
+     nroUsuarios.innerText = data;
 
        
-    })
+    });
     
