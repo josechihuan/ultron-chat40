@@ -1,0 +1,1 @@
+creamos la interface del chat una vez haber configurado el servidor 

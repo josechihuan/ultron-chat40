@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  
+  //- aqui inicamos el chat la comunicacion entre los clientes, cliente servidor servidor cliente. queremos que se intereprete toda la pagina, y que se genere el script javascript, para interactuar con el html de la pagina, si vemos el localhost3000 al cargar, vemos enla terminal que sale el mensaje se ha conectado un nuevo cliente, con ello probamos que los clientes han accedido a ese puerto
+  //- creamos la interface del chat
+  .chat 
+    header 
+     h1 APP Chat
+     h4 
+        | Usuarios conectados: 
+        span#nroUsuarios
+    main  
+        ul#mensajes
+          li Lourder: HOla Amigos 
+          li Ramon: que pasa 
+          li Sofia buenas tardes
+
+
+    footer 
+      div 
+        label Nombre 
+        input#inputNombre(type="text", 
+        name="nombre")
+      div
+        label Mensaje 
+        input#inputMensaje(type="text", name="mensaje")
+      div
+       button#btnEnviar Enviar
+  
+ 
+
+  script.
+     //socket desde la parte del cliente
+     // tenemos que recuperar los elementos del dom, hacer una recuperacion de datos,  //- canal de coumnicacion cliente servidor cocket = io(), getionamos al cliente
+    const socket= io();
+  
+    const  inputNombre = document.getElementById('inputNombre');
+    const inputMensaje =  document.getElementById('inputMensaje');
+    const btnEnviar =  document.getElementById('btnEnviar');
+    //
+    const mensajes =   document.getElementById('mensajes');
+    const nroUsuarios =   document.getElementById('nroUsuarios');
+
+    btnEnviar.addEventListener('click', () => {
+       console.log(inputNombre.value, inputMensaje.value);//aqui vemos los datos que nos manda el cliente pero para verlo en el servidor debemos conectar el con servidor e ir a www.js y socket.on y mandar el mensaj_chat
+       // ahora lo que vamos a buscar una emision a todos los clientes conectados desde io usamos el metodo io.emit() esto en el servidor
+       socket.emit('mensaje_chat', {
+         nombre: inputNombre.value,
+         mensaje: inputMensaje.value
+       });
+    });
+    //me suscribo para ver si me llega un evento del mismo tipo, es decir, una vez pulsado el boton, va al servidor el servidor lo devuelve y recibimos aqui para que lo vean todos los clientes
+    socket.on('mensaje_chat', (data)=>{
+       // console.log(data);//aqui llega el objeto data que tiene el mensaje y los datos desde el servidor
+        // cuando llegue la informacion debemos agregar un li dentro del ul con el identificador del mensaje
+        // cosas a tener en cuenta, ahora estamos en la parte del cliente, (pug es un motor de plantilla). si queremos implantar un li opcion 1, creamos una const menajes en la parte superior
+       // mensajes.innerHTML= (`<li>${data.nombre}: ${data.mensaje}</li>`) hasta aqui vemos que llega el mensaje a los diferentes clientes, comprobando por el console log de cada cliente
+        const li = document.createElement('li');
+        li.innerText = `${data.nombre}: ${data.mensaje}`;
+        mensajes.appendChild(li);
+
+
+    });
+
+    socket.on('usuarios_chat', (data) => {´
+      console.log('USUARIOS', data);// nos muestra los usuarios conectados... 
+      //mostrar el número de usuarios debajo del titulo del chat
+     
+      innerText= nroUsuarios.data
+
+       
+    })
+    

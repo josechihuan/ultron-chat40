@@ -1,0 +1,44 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.chat{
+
+  height: 100vh;
+}
+header {
+  height: 15vh;
+  background-color: rgb(217, 191, 241);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+main{
+  height: 70vh;
+  max-width: 1300px;
+  margin: 0 auto;
+  overflow: scroll;
+}
+main ul{
+  list-style: none;
+}
+main ul li {
+ margin: 10px 10px;
+}
+footer{
+  height: 15vh;
+  background-color: rgb(217, 191, 241);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+}
+footer div{
+ width: 300px;
+ display: flex;
+ flex-direction: column;
+
+}
