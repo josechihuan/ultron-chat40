@@ -21,9 +21,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+//guardas cosas en sesion que posteriormente podamos guestionarlas
+//ejem introduce tu nombre en el app chat
 app.use(session({
-  secret: 'frase ultrasecreta', 
+  secret: 'frase ultrasecreta', resave: false, saveUninitialized: true
 }));
 
 app.use('/', indexRouter);
